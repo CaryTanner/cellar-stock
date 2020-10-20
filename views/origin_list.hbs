@@ -1,0 +1,19 @@
+<div class="container">
+    <h1 class="mt-2">{{title}}</h1>
+    <div>
+        {{#each origin_list}}
+
+        <ul class="list-group mt-2 col-md-8">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <h4>{{this.country}}</h4>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Region: {{this.region}}
+            </li>
+           
+
+        </ul>
+        {{/each}}
+   </div>
+   </div>     

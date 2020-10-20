@@ -1,0 +1,17 @@
+<div class="container">
+    <h1 class="mt-2">{{title}}</h1>
+    <div>{{#each producer_list}}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h5>{{this.name}}</h5>
+                
+                <p>{{this.region}}</p>
+                <br>
+                <a href="producer/{{this._id}}">Full Details</a>
+                </li>
+        </ul>
+
+
+        {{/each}}
+    </div>
+</div>

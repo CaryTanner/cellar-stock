@@ -1,0 +1,60 @@
+<div class="container">
+    <h1 class="mt-2">{{title}}</h1>
+    <h6>Sorted by: Bin No.</h6>
+    <div>{{#each bottleInstance_list}}
+        <ul class="list-group mt-2">
+            <li class="list-group-item">
+                <ul class="list-group col-md-8">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <h2>{{this.producer.name}}</h2>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <ul class="list-group list-group-horizontal-md">
+                            <li class="list-group-item flex-fill">{{this.origin.country}}</li>
+                            <li class="list-group-item flex-fill">{{this.origin.region}}</li>
+                            <li class="list-group-item flex-fill">{{this.village}}</li>
+                            <li class="list-group-item flex-fill">{{this.vineyard}}</li>
+
+                        </ul>
+
+
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Classification: {{this.classification}}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Age: {{this.age}}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Category: {{this.category}}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{!-- variety is in an array to provide for wine with multiple grape varieties --}}
+                        Variety: {{#each this.variety}}
+                                        {{this.varietyName}}
+                                        {{/each}}
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Bottle Count
+                        <span class="badge badge-info badge-pill ml-2">{{this.count}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Bin No.
+                        <span class="badge badge-info badge-pill ml-2">{{this.bin }}</span>
+                    </li>
+                   
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="bottleinstance/{{this._id}}">Full Details</a>
+                    </li>
+
+                </ul>
+
+
+
+        </ul>
+
+
+        {{/each}}
+    </div>
+</div>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  <title>Cellar Stock- Wine Cellar Management</title>
+
+</head>
+
+<body>
+
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <h1> <a class="navbar-brand" href="/">Cellar Stock</a></h1>
+
+    <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbar-collapse-id"
+      aria-controls="navbarTogglerCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-collapse-id">
+
+      <ul class="navbar-nav justify-content-end">
+        <li class="nav-item"><a class="nav-link" href="/catalog">Home</a></li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink-bottles"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Bottles
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink-bottles">
+            <a class="dropdown-item" href="/catalog/bottles">Bottle List</a>
+            <a class="dropdown-item" href="/catalog/bottle/create">Create Bottle</a>
+            <a class="dropdown-item" href="/catalog/bottleinstances">Current Stock</a>
+            <a class="dropdown-item" href="/catalog/bottleinstance/create">Manage Stock</a>
+          </div>
+        </li>
+
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink-producers"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Producers</a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink-producers">
+            <a class="dropdown-item" href="/catalog/producers">Producer List</a>
+            <a class="dropdown-item" href="/catalog/producer/create">Create Producer</a>
+
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink-Terroirs"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Origins</a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink-Terroirs">
+            <a class="dropdown-item" href="/catalog/origins">Origin List</a>
+            <a class="dropdown-item" href="/catalog/origin/create">Create Origin</a>
+
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink-Varieties"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Grape Variety</a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink-Varieties">
+            <a class="dropdown-item" href="/catalog/varieties">Grape Varieties </a>
+            <a class="dropdown-item" href="/catalog/variety/create">Create Variety</a>
+
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink-Categories"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink-Varieties">
+            <a class="dropdown-item" href="/catalog/category/red">Red</a>
+            <a class="dropdown-item" href="/catalog/category/white">White</a>
+            <a class="dropdown-item" href="/catalog/category/rose">Rose</a>
+            <a class="dropdown-item" href="/catalog/category/sparkling">Sparkling</a>
+            <a class="dropdown-item" href="/catalog/category/sweet">Sweet</a>
+            <a class="dropdown-item" href="/catalog/category/fortified">Fortified</a>
+            <a class="dropdown-item" href="/catalog/category/orange">Orange</a>
+
+          </div>
+        </li>
+
+
+        
+
+
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    {{{body}}}
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

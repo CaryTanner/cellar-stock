@@ -1,0 +1,98 @@
+<div class="container">
+    <h1 class="mt-3">{{title}}</h1>
+    <form action='' method='POST' class="mt-3">
+        <div class="form-group">
+            <label for="producerName" class="">
+                <h5>Producer Name</h5><span>(required)</span>
+            </label>
+            <select class="form-control" name="producerName" id="producerName" value={{data.producer}}>
+                {{#each data.producers}}
+                <option class="" value={{this._id}}>{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="age" class=""><h5>Age</h5><span>(required)</span></label>
+            <input type="text" name="age" class="form-control mb-0" placeholder="YYYY- vintage or year of bottling for NV"
+                value="{{data.age}}">
+        </div>
+        <div class="form-group">
+            <label for="originName" class=""><h5>Origin</h5><span>(required)</span></label>
+            <select class="form-control" name="originName" id="originName" value={{data.origin}}>
+                {{#each data.origins}}
+                <option class="" value={{this._id}}>{{this.country}}&nbsp;{{this.region}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="village" class=""><h5>Village</h5></label>
+            <input type="text" name="village" class="form-control mb-0" placeholder="ex. Monforte"
+                value="{{data.village}}">
+        </div>
+        <div class="form-group">
+            <h5><label for="vineyard" class="">Vineyard</label></h5>
+            <input type="text" name="village" class="form-control mb-0" placeholder="ex. Bussia"
+                value="{{data.vineyard}}">
+        </div>
+        <div class="form-group">
+            <h5><label for="classification" class="">Classification</label></h5>
+            <input type="text" name="classification" class="form-control mb-0" placeholder="ex. Smaragd or Gran Reserva"
+                value="{{data.classification}}">
+        </div>
+        <div class="form-group">
+            <label for="categoryName" class=""><h5>Category</h5><span>(required)</span></label>
+            <select class="form-control" name="category" id="categoryName" value={{data.category}}>
+                <option class="" value="Red">Red</option>
+                <option class="" value="White">White</option>
+                <option class="" value="Rose">Rose</option>
+                <option class="" value="Sparkiling">Sparkling</option>
+                <option class="" value="Orange">Orange</option>
+                <option class="" value="Sweet">Sweet</option>
+                <option class="" value="Fortified">Fortified</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <h5><label for="varietyName" class="">Variety</label></h5>
+            
+                {{#each data.varieties}}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="varietyCheck" id={{this._id}}
+                        value={{this.varietyName}} checked={{this.checked}}>
+                    <label class="form-check-label" for={{this._id}}>{{this.varietyName}}</label>
+                </div>
+                
+                {{/each}}
+            
+        </div>
+        <div class="form-group">
+            <label for="bottleCount" class=""><h5>Quantity</h5><span>(required)</span></label>
+            <input type="number" name="bottleCount" class="form-control mb-0" placeholder="Number of bottles"
+                value="{{data.bottleCount}}" min="1" />
+        </div>
+        <div class="form-group">
+            <label for="binNumber" class=""><h5>Bin Number</h5><span>(required)</span></label>
+            <input type="number" name="binNumber" class="form-control mb-0" placeholder="Which bin are bottles stored in?"
+                value="{{data.binNumber}}" min="1" />
+        </div>
+        <div class="form-group">
+            <label for="status" class=""><h5>Status</h5><span>(required)</span></label>
+            <select class="form-control" name="status" id="status" value={{data.status}}>
+                <option class="" value="Drink">Drink</option>
+                <option class="" value="Hold">Hold</option>
+                <option class="" value="DrinkOrHold">Drink or Hold</option>
+                
+            </select>
+        </div>
+       <div class="form-group">
+            <h5><label for="notes" class="">Notes</label></h5>
+            <textarea name="notes" class="form-control mb-0" placeholder="ex. Your notes here..."
+                value="{{data.notes}}" maxlength="500" rows="3" ></textarea>
+        </div>
+
+        {{#each errors}}
+
+        <p class="text-danger mt-0">{{this.msg}}</p>
+        {{/each}}
+        <input type="submit" value="Add Producer" class="btn btn-primary btn-sm">
+    </form>
+</div>

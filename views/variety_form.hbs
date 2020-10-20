@@ -1,0 +1,18 @@
+<h1>{{title}}</h1>
+
+
+<form action='' method='POST' class="mt-3">
+    <div class="form-group">
+        <h5><label for="varietyName" class="">Variety Name</label></h5>
+        <input type="text" name="varietyName" class="form-control mb-0" placeholder="ex. Pinot Noir" value="
+
+   
+    {{this.varietyName.varietyName}}
+   ">
+    </div>
+    {{#each errors}}
+
+    <p class="text-danger mt-0">{{this.msg}}</p>
+    {{/each}}
+    <input type="submit" value="Add Variety" class="btn btn-primary btn-sm">
+</form>

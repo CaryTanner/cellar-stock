@@ -1,0 +1,14 @@
+<div class="container">
+    <h1 class="mt-2">{{title}}</h1>
+    <div>{{#each varieties_list}}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h5>{{this.varietyName}}</h5>
+                <a href="/catalog/variety/{{this.varietyName}}">Bottles with this variety</a>
+                </li>
+        </ul>
+
+
+        {{/each}}
+    </div>
+</div>

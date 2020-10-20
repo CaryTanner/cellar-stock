@@ -1,0 +1,20 @@
+<div class="container">
+    <h1 class="mt-2">{{title}}</h1>
+    <div>{{#each bottle_list}}
+        <ul class="list-group">
+            <li class="list-group-item">{{this.producer.name}}
+                <br> {{this.origin.country}} {{this.origin.region}} {{this.origin.village}} {{this.origin.vineyard}}    
+                <br>  {{this.classification}}
+                <br> {{this.category}}
+                
+                <br> {{#each this.variety}} 
+                        <span>{{this.varietyName}}</span>
+                    {{/each}}
+                <br> <a href="bottle/{{this._id}}">Full Details</a>
+                </li>
+        </ul>
+
+
+        {{/each}}
+    </div>
+</div>

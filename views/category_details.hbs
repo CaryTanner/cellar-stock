@@ -1,0 +1,77 @@
+<div class="container">
+    <h1 class="mt-2">{{title}}</h1>
+
+    <div>{{#each category_details}}
+        <ul class="list-group mt-2">
+            <li class="list-group-item">
+                <ul class="list-group col-md-8">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <h2>{{this.bottle.producer.name}}</h2>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <ul class="list-group list-group-horizontal-md">
+                            <li class="list-group-item flex-fill">{{this.bottle.origin.country}}</li>
+                            <li class="list-group-item flex-fill">{{this.bottle.origin.region}}</li>
+                            <li class="list-group-item flex-fill">{{this.bottle.origin.village}}</li>
+                            <li class="list-group-item flex-fill">{{this.bottle.origin.vineyard}}</li>
+
+                        </ul>
+
+
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Classification: {{this.bottle.classification}}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Age: {{this.age}}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Category: {{this.bottle.category}}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{!-- variety is in an array to provide for wine with multiple grape varieties --}}
+                        Variety: {{#each this.bottle.variety}}
+                        {{this.varietyName}}
+                        {{/each}}
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Bottle Count
+                        <span class="badge badge-info badge-pill ml-2">{{this.count}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Bin No.
+                        <span class="badge badge-info badge-pill ml-2">{{this.bin }}</span>
+                    </li>
+                    {{#if this.drink_from}}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Drink From: {{this.drink_from_formatted}}
+                    </li>
+                    {{/if}}
+
+                    {{#if this.drink_before}}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Drink Before: {{this.drink_before_formatted}}
+                    </li>
+                    {{/if}}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="bottleinstance/{{this._id}}">Full Details</a>
+                    </li>
+
+                </ul>
+
+
+
+        </ul>
+
+
+        {{/each}}
+    </div>
+
+    {{#if category_details}}
+
+    {{else}}
+    <h4 class="mt-4">Time to go shopping!</h4>
+    <h6>There aren't any wines in this category.</h6>
+    {{/if}}
+</div>
