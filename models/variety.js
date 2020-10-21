@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 
 const VarietySchema = Schema(
     {
-        varietyName: { type: String, required: true, maxlength: 80}
+        varietyName: { type: String, required: true, maxlength: 80},
+        
 }
 )
 
@@ -13,7 +14,7 @@ const VarietySchema = Schema(
 VarietySchema
     .virtual('url')
     .get( () => {
-        return '/catalog/variety/' + this._id;
+        return '/catalog/variety/' + varietyName;
 })
 
 

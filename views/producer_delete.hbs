@@ -1,0 +1,25 @@
+<div class="container">
+<h1 class="mt-3">{{title}}</h1>
+<h2 class="mt-3">{{producer.name}}</h2>
+
+{{#if producer_bottleInstances}}
+Remove these bottles from Cellar Stock before you delete this producer
+    {{producer_bottleInstances}} 
+    {{#each producer_bottleInstances}}
+    <p>{{producer_bottleInstances.status}}</p>
+    {{/each}}
+    {{else}}
+    <p class="mt-4">Do you really want to delete this producer?</p>
+    {{/if}}
+
+    <form  method="POST">
+        <div class="form-group">
+        <input type="hidden" name="producerid" id="producerid" class="form-control " placeholder="ex. Germany" value="{{producer._id}}">
+    </div>
+    
+   
+    
+    <input type="submit" value="Delete" class="btn btn-danger btn-sm mt-3 mb-0">
+    </form>
+
+</div>

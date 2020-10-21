@@ -28,13 +28,7 @@ const BottleInstanceSchema = new Schema({
     default: "Hold",
   },
 });
-BottleInstanceSchema.virtual("drink_from_formatted").get(() => {
-  return moment(this.drink_from).format("MMM YYYY");
-});
 
-BottleInstanceSchema.virtual("drink_before_formatted").get(() => {
-  return moment(this.drink_before).format("MMM YYYY");
-});
 
 BottleInstanceSchema.virtual("url").get(function () {
   return "/catalog/bottleinstance/" + this._id;

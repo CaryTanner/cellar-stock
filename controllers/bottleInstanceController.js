@@ -10,6 +10,8 @@ const Category = require("../models/category");
 const async = require("async");
 const { body, validationResult } = require("express-validator");
 
+
+
 exports.index = (req, res) => {
   async.parallel(
     {
@@ -80,28 +82,143 @@ exports.bottleinstance_detail = (req, res) => {
 };
 
 // Display bottleInstance create form on GET.
+
+/*   can't reselect dropdown/select inputs when data needs to be re-entered
+*    recheck varieties from list of varieties??
+*
+* */
+
+
 exports.bottleinstance_create_get = (req, res) => {
     async.parallel({
         producers: (cb) => {
             Producer.find(cb)
+            .sort([["name", "ascending"]])
         },
         origins: (cb)=> {
             Origin.find(cb)
+            .sort([["country", "ascending"]])
         },
         varieties: (cb) => {
             Variety.find(cb)
+            .sort([["varietyName", "ascending"]])
         },
     }, (err, results) => {
         
-        res.render('bottle_instance_form', {title: "Add a New Bottle", data: results})
+        res.render('bottle_instance_form', {title: "Add a New Bottle", producers: results.producers, origins: results.origins, varieties: results.varieties})
 
     })
 };
 
 // Handle bottleInstance create on POST.
-exports.bottleinstance_create_post = (req, res) => {
-    res.send('NOT IMPLEMENTED: bottleInstance create POST');
-};
+exports.bottleinstance_create_post = [
+   
+    // (req, res, next) => {
+    //     if(!(req.body.varieties instanceof Array)){
+    //         if(typeof req.body.varieties ==='undefined')
+    //         req.body.varieties = [];
+    //         else
+    //         req.body.varieties = new Array(req.body.varieties);
+    //     }
+    //     console.log('log of variety ids' + req.body.varieties)
+    //     next();
+    // },
+    
+     // Validate and sanitise fields.
+     
+body('age', 'Age is required')
+    .trim()
+    .isLength({min:'4', max:'4'})
+    .withMessage('Year must be 4 numbers - YYYY')
+    .isNumeric()
+    .withMessage('May only contain numbers')
+    .escape(),
+
+body("village")
+    .trim()
+    .escape()
+    .matches(/^[a-z0-9 ]+$/i)
+    .withMessage("Village name has non-alphanumeric characters")
+    .optional({ checkFalsy: true }),
+  body("vineyard")
+    .trim()
+    .escape()
+    .matches(/^[a-z0-9 ]+$/i)
+    .withMessage("Vineyard name has non-alphanumeric characters")
+    .optional({ checkFalsy: true }),
+body("classification")
+    .trim()
+    .escape()
+    .matches(/^[a-z0-9 ]+$/i)
+    .withMessage("Classification has non-alphanumeric characters")
+    .optional({ checkFalsy: true }),
+body('notes')
+    .trim()
+    .escape(),
+
+    (req, res, next) => {
+        
+        //collect errors
+        const errors = validationResult(req)
+        
+        //create new bottleInstance with proper data
+        let bottleInstance = new BottleInstance({
+            producer: req.body.producer,
+            origin: req.body.origin,
+            village: req.body.village,
+            vineyard: req.body.vineyard,
+            classification: req.body.classification,
+            category: req.body.category,
+            variety: req.body.varieties,
+            notes: req.body.notes,
+            age: req.body.age,
+            count: req.body.count,
+            bin: req.body.bin,
+            status: req.body.status ,
+            notes: req.body.notes
+        })
+        console.log( 'this is the bottle instance' + bottleInstance)
+        if(!errors.isEmpty()){
+            async.parallel({
+                producers: (cb) => {
+                    Producer.find(cb)
+                    .sort([["name", "ascending"]])
+                },
+                origins: (cb)=> {
+                    Origin.find(cb)
+                    .sort([["country", "ascending"]])
+                },
+                varieties: (cb) => {
+                    Variety.find(cb)
+                    .sort([["varietyName", "ascending"]])
+                },
+            }, (err, results) => {
+                
+                if(err){return next(err)}
+
+                // // Mark our selected varieties as checked.
+                // for (let i = 0; i < results.varieties.length; i++) {
+                //     if (bottleInstance.variety.indexOf(results.varieties[i]._id) > -1) {
+                //         return results.varieties[i].checked='true';
+                //     }
+                // }
+                //     (console.log('results log' + results))
+                
+                res.render('bottle_instance_form', {title: "Add a New Bottle", producers: results.producers, origins: results.origins, varieties: results.varieties, data: req.body, errors: errors.array()})
+        
+            })
+            return
+        } else {
+            bottleInstance.save((err)=> {
+                if (err){return next(err)}
+                res.redirect(bottleInstance.url)
+            })
+        }
+
+
+    }
+    
+];
 
 // Display bottleInstance delete form on GET.
 exports.bottleinstance_delete_get = (req, res) => {

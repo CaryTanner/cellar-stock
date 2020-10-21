@@ -1,0 +1,17 @@
+<div class="container">
+    <h1 class="mt-3">{{title}}:&nbsp;{{data.origin.country}} &nbsp;{{data.origin.region}} </h1>
+    <ul class="list-group mt-2">
+        {{#each data.origin_bottleInstances}}
+        <li class="list-group-item"> Age: {{this.age}}</li>
+            <li class="list-group-item"> Category: {{this.category}}</li>
+            <li class="list-group-item"> Status: {{this.status}}</li>
+            <li class="list-group-item"> Count: <span class="badge badge-info badge-pill ml-2">{{this.count}}</span></li>
+         {{/each}}   
+    </ul>
+    {{#if data.origin_bottleInstances}}
+
+    {{else}}
+    <h4 class="mt-4">Time to go shopping!</h4>
+    <h6>There aren't any of these wines in your cellar yet.</h6>
+    {{/if}}
+</div>

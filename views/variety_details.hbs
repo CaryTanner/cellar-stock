@@ -8,31 +8,31 @@
             <li class="list-group-item">
                 <ul class="list-group col-md-8">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <h2>{{this.bottle.producer.name}}</h2>
+                        <h2>{{this.producer.name}}</h2>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <ul class="list-group list-group-horizontal-md">
-                            <li class="list-group-item flex-fill">{{this.bottle.origin.country}}</li>
-                            <li class="list-group-item flex-fill">{{this.bottle.origin.region}}</li>
-                            <li class="list-group-item flex-fill">{{this.bottle.origin.village}}</li>
-                            <li class="list-group-item flex-fill">{{this.bottle.origin.vineyard}}</li>
+                            <li class="list-group-item flex-fill">{{this.origin.country}}</li>
+                            <li class="list-group-item flex-fill">{{this.origin.region}}</li>
+                            <li class="list-group-item flex-fill">{{this.village}}</li>
+                            <li class="list-group-item flex-fill">{{this.vineyard}}</li>
 
                         </ul>
 
 
                     </li>
                     <li class="list-group-item d-flex align-items-center">
-                        <span class="text-secondary">Classification: &nbsp;</span>  {{this.bottle.classification}}
+                        <span class="text-secondary">Classification: &nbsp;</span>  {{this.classification}}
                     </li>
                     <li class="list-group-item d-flex  align-items-center">
                         <span class="text-secondary">Age: &nbsp;</span> {{this.age}}
                     </li>
                     <li class="list-group-item d-flex  align-items-center">
-                        <span class="text-secondary">Category: &nbsp;</span> {{this.bottle.category}}
+                        <span class="text-secondary">Category: &nbsp;</span> {{this.category}}
                     </li>
                     <li class="list-group-item d-flex align-items-center">
                         {{!-- variety is in an array to provide for wine with multiple grape varieties --}}
-                        <span class="text-secondary">Variety: &nbsp;</span> {{#each this.bottle.variety}}
+                        <span class="text-secondary">Variety: &nbsp;</span> {{#each this.variety}}
                         {{this.varietyName}}
                         {{/each}}
                     </li>
@@ -45,17 +45,7 @@
                         Bin No.
                         <span class="badge badge-info badge-pill ml-2">{{this.bin }}</span>
                     </li>
-                    {{#if this.drink_from}}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Drink From: {{this.drink_from_formatted}}
-                    </li>
-                    {{/if}}
-
-                    {{#if this.drink_before}}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Drink Before: {{this.drink_before_formatted}}
-                    </li>
-                    {{/if}}
+                    
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <a href="bottleinstance/{{this._id}}">Full Details</a>
                     </li>

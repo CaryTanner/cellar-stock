@@ -23,33 +23,21 @@ exports.varieties_list = function (req, res, next) {
 exports.variety_detail = function (req, res, next) {
   let varietyNameParam = req.params.varietyname;
   console.log(varietyNameParam);
+e
   BottleInstance.find({})
-    .populate({ path: "bottle", path: "category" })
-    .populate({
-      path: "bottle",
-      populate: {
-        path: "producer",
-      },
-    })
-    .populate({
-      path: "bottle",
-      populate: {
-        path: "origin",
-      },
-    })
-    .populate({
-      path: "bottle",
-      populate: {
-        path: "variety",
-      },
-    })
+    .populate('producer')
+    .populate('origin')
+    .populate({ path: 'variety',
+            populate: 'varietyName'
+        })
     .exec((err, details_variety) => {
+        console.log(details_variety)
       if (err) {
         return next(err);
       }
 
       let filteredList = details_variety.filter(
-        (x) => x.bottle.variety[0].varietyName === varietyNameParam
+        (x) => x.variety.varietyName === varietyNameParam
       );
 
       //Successful, so render

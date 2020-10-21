@@ -1,6 +1,7 @@
 const Origin = require("../models/origin");
 const { body, validationResult } = require("express-validator");
-
+const BottleInstance = require('../models/bottleInstance');
+const async = require("async");
 // Display list of all origin.
 exports.origin_list = (req, res) => {
   Origin.find({}, " country region village vineyard")
@@ -19,8 +20,29 @@ exports.origin_list = (req, res) => {
 };
 
 // Display detail page for a specific origin.
-exports.origin_detail = (req, res) => {
-  res.send("NOT IMPLEMENTED: origin detail: " + req.params.id);
+exports.origin_detail = (req, res, next) => {
+    async.parallel(
+        {
+          origin: (cb) => {
+            Origin.findById(req.params.id)
+            .exec(cb)
+            
+          },
+          origin_bottleInstances: (cb) => {
+            BottleInstance.find({ origin: req.params.id }).exec(cb);
+          },
+        },
+        (err, results) => {
+            console.log(results)
+          if (err) {
+            return err;}
+        if (results.origin==null) { // No results.
+                var err = new Error('Origin not found');
+                err.status = 404;
+                return next(err);
+            } 
+            res.render('origin_detail', {title: 'Origin Detail', data: results})
+        })
 };
 
 // Display origin create form on GET.
@@ -44,26 +66,14 @@ exports.origin_create_post = [
     .matches(/^[a-z0-9 ]+$/i)
     .withMessage("Region name has non-alphanumeric characters")
     .optional({ checkFalsy: true }),
-  body("village")
-    .trim()
-    .escape()
-    .matches(/^[a-z0-9 ]+$/i)
-    .withMessage("Village name has non-alphanumeric characters")
-    .optional({ checkFalsy: true }),
-  body("vineyard")
-    .trim()
-    .escape()
-    .matches(/^[a-z0-9 ]+$/i)
-    .withMessage("Vineyard name has non-alphanumeric characters")
-    .optional({ checkFalsy: true }),
+  
 
   (req, res, next) => {
     const errors = validationResult(req);
     let origin = new Origin({
       country: req.body.country,
       region: req.body.region,
-      village: req.body.village,
-      vineyard: req.body.vineyard,
+      
     });
 
     if (!errors.isEmpty()) {
@@ -72,8 +82,7 @@ exports.origin_create_post = [
         errors: errors.array(),
         country: req.body.country,
         region: req.body.region,
-        village: req.body.village,
-        vineyard: req.body.vineyard
+       
       });
       return;
     } else {
@@ -81,7 +90,7 @@ exports.origin_create_post = [
             if (err) {
               return next(err);
             }
-            res.redirect(origin.url);
+            res.redirect('/catalog/origin/' + origin._id );
           });
         }
     }

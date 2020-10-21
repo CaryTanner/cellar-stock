@@ -5,8 +5,7 @@ const OriginSchema = new Schema(
     {
         country: { type: String, required: true, maxlength: 150},
         region: { type: String, required: true, maxlength: 150},
-        village: { type: String,  maxlength: 150},
-        vineyard: { type: String,  maxlength: 150},
+     
     }
 );
 

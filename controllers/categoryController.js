@@ -13,36 +13,16 @@ exports.category_details = (req, res) => {
     req.params.name.charAt(0).toUpperCase() + req.params.name.slice(1);
     
   BottleInstance.find({})
-  .populate( {path: 'bottle',
-            category: categoryName})
-            .populate({
-                path: 'bottle',
-                populate: {
-                    path: 'producer'
-                }
-                
-                
-            })
-            .populate({
-                path: 'bottle',
-                populate: {
-                    path: 'origin'
-                }
-            })
-            .populate({
-                path: 'bottle',
-                populate: {
-                    path: 'variety'
-                    
-                }
-            })
+    .populate('producer')
+    .populate('origin')
+    .populate('variety')
     .exec(
         (err, details_category) => {
       
       if (err) {
         return next(err);
       }
-      let filteredList = details_category.filter(instance => instance.bottle.category === categoryName);
+      let filteredList = details_category.filter(instance => instance.category === categoryName);
       //Successful, so render
       res.render("category_details", {
         title: ` ${categoryName} Wines in Stock`,
