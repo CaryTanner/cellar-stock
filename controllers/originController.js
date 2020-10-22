@@ -61,12 +61,12 @@ exports.origin_create_post = [
   body("country")
     .trim()
     .isLength({ min: 1 })
-    
+
     .withMessage("Country name must be specified"),
-    
+
   body("region")
     .trim()
-    
+
     .optional({ checkFalsy: true }),
 
   (req, res, next) => {
@@ -96,15 +96,72 @@ exports.origin_create_post = [
 ];
 
 // Display origin delete form on GET.
-exports.origin_delete_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: origin delete GET");
+exports.origin_delete_get = (req, res, next) => {
+  async.parallel(
+    {
+      origin: (cb) => {
+        Origin.findById(req.params.id).exec(cb);
+      },
+      origin_bottleInstances: (cb) => {
+        BottleInstance.find({ origin: req.params.id })
+          .populate("producer")
+          .populate("origin")
+          .populate("variety")
+          .exec(cb);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return err;
+      }
+      if (results.origin === null) {
+        res.redirect("/catalog/origins");
+      }
+      res.render("origin_delete", {
+        title: "Delete Origin",
+        origin: results.origin,
+        origin_bottleInstances: results.origin_bottleInstances,
+      });
+    }
+  );
 };
 
 // Handle origin delete on POST.
-exports.origin_delete_post = (req, res) => {
-  res.send("NOT IMPLEMENTED: origin delete POST");
+exports.origin_delete_post = (req, res, next) => {
+  async.parallel(
+    {
+      origin: (cb) => {
+        Origin.findById(req.params.id).exec(cb);
+      },
+      origin_bottleInstances: (cb) => {
+        BottleInstance.find({ origin: req.params.id })
+          .populate("producer")
+          .populate("origin")
+          .populate("variety")
+          .exec(cb);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return err;
+      }
+      if (results.origin_bottleInstances.length > 0) {
+        res.render("origin_delete", {
+          title: "Delete Origin",
+          origin: results.origin,
+          origin_bottleInstances: results.origin_bottleInstances,
+        });
+      } else {
+        Origin.findByIdAndRemove(req.body.originid, function deleteOrigin(err) {
+          if (err) {
+            return next(err);
+          }
+          res.redirect("/catalog/origins");
+        });
+      }
+    }
+  );
 };
-
 // Display origin update form on GET.
 exports.origin_update_get = (req, res) => {
   res.send("NOT IMPLEMENTED: origin update GET");

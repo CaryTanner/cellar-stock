@@ -1,21 +1,23 @@
-<div class="container">
-    <h1 class="mt-2">{{title}}</h1>
+<div class="container-fluid col-md-6 justify-content-center">
+    <h3 class="mt-2">{{title}}</h3>
     <div>
         {{#each origin_list}}
 
-        <ul class="list-group mt-2 col-md-6">
+        <ul class="list-group mt-2 ">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <h3>{{this.country}}</h3>
+                <h3 class="mt-0 mb-0">{{this.country}}</h3>
+            
+                <h5 class="mt-0 mb-0">{{this.region}}</h5>
             </li>
-
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <h6>Region: {{this.region}}</h6>
+            <li class="list-group-item d-flex justify-content-start align-items-center">
+                <a href="/catalog/origin/{{this._id}}"><button
+                        class="btn btn-outline-primary btn-sm mt-1 mr-2">Wines</button></a>
+                <a href="/catalog/origin/{{this._id}}/delete"><button
+                        class="btn btn-outline-danger btn-sm mt-1">Delete</button></a>
             </li>
-           <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="/catalog/origin/{{this._id}}"><button class="btn btn-outline-primary btn-sm">Wines</button></a>
-                    </li>
 
         </ul>
+
         {{/each}}
-   </div>
-   </div>     
+    </div>
+</div>

@@ -1,10 +1,10 @@
-<div class="container">
+<div class="container-fluid col-md-6 justify-content-center">
     
-    <form action='' method='POST' class="mt-3 col-md-6">
-        <h1 class="mt-3">{{title}}</h1>
+    <form action='' method='POST' class="mt-3 " >
+        <h3 class="mt-3">{{title}}</h3>
         <div class="form-group">
             <label for="producer" class="mt-3">
-                <h5>Producer Name</h5><span>(required)</span>
+                <h5>Producer Name</h5><span class="text-secondary">(required)</span>
             </label>
             <select class="form-control" name="producer" id="producer" value={{data.producer}} required>
                 {{#each producers}}
@@ -17,7 +17,10 @@
         </div>
         
         <div class="form-group">
-            <label for="origin" class=""><h5>Origin</h5><span>(required)</span></label>
+            <label for="origin" class="">
+                <h5>Origin</h5>
+                <span class="text-secondary">(required)</span>
+            </label>
             <select class="form-control" name="origin" id="origin" value={{data.origin}} required>
                 {{#each origins}}
                 <option class="" value={{this._id}}>{{this.country}}&nbsp;{{this.region}}</option>
@@ -26,7 +29,9 @@
             <p class="mt-1"><a href="/catalog/origin/create">Create a new origin here</a></p>
         </div>
         <div class="form-group">
-            <label for="village" class=""><h5>Village</h5></label>
+            <label for="village" class="">
+                <h5>Village</h5>
+            </label>
             <input type="text" name="village" class="form-control mb-0" placeholder="ex. Monforte"
                 value="{{data.village}}">
         </div>
@@ -41,7 +46,10 @@
                 value="{{data.classification}}">
         </div>
         <div class="form-group">
-            <label for="age" class=""><h5>Age</h5><span>(required)</span></label>
+            <label for="age" class="">
+                <h5>Age</h5>
+                <span class="text-secondary">(required)</span>
+            </label>
             <input type="number" name="age" class="form-control mb-0" placeholder="YYYY- vintage or year of bottling for NV"
                 value="{{data.age}}" min="1600" max="2100" required/>
         </div>
@@ -57,11 +65,14 @@
                 <option class="" value="Fortified">Fortified</option>
             </select>
         </div>
-        <div class="form-group">
-            <h5><label for="varietyName" class="">Variety</label></h5>
-            <div class="d-flex flex-sm-wrap ">
+        <div class="form-group " >
+            <label for="varietyName" class="">
+                <h5>Variety </h5>
+                <span class="text-secondary">(required)</span>
+            </label>
+            <div class="d-flex flex-wrap  justify-content-between ">
                 {{#each varieties}}
-                <div class="form-check form-check-inline mt-1 mb-1">
+                <div class="form-check form-check-inline m-2 col-md-3">
                     <input class="form-check-input" type="checkbox" name="varieties" id={{this._id}}
                         value={{this._id}}  >
                     <label class="form-check-label" for={{this._id}}>{{this.varietyName}}</label>
@@ -69,20 +80,29 @@
                 
                 {{/each}}
             </div>
-            <p class="mt-1"><a href="/catalog/variety/create">Add a new variety here</a></p>
+            <p class="mt-3"><a href="/catalog/variety/create">Add a new variety here</a></p>
         </div>
         <div class="form-group">
-            <label for="count" class=""><h5>Quantity</h5><span>(required)</span></label>
+            <label for="count" class="">
+                <h5>Quantity</h5>
+                <span class="text-secondary">(required)</span>
+            </label>
             <input type="number" name="count" class="form-control mb-0" placeholder="Number of bottles"
                 value="{{data.count}}" min="1" required/>
         </div>
         <div class="form-group">
-            <label for="bin" class=""><h5>Bin Number</h5><span>(required)</span></label>
+            <label for="bin" class="">
+                <h5>Bin Number</h5>
+                <span class="text-secondary">(required)</span>
+            </label>
             <input type="number" name="bin" class="form-control mb-0" placeholder="Which bin are bottles stored in?"
                 value="{{data.bin}}" min="1" required/>
         </div>
         <div class="form-group">
-            <label for="status" class=""><h5>Status</h5><span>(required)</span></label>
+            <label for="status" class="">
+                <h5>Status</h5>
+                <span class="text-secondary">(required)</span>
+            </label>
             <select class="form-control" name="status" id="status" value={{data.status}} required>
                 <option class="" value="Drink">Drink</option>
                 <option class="" value="Hold">Hold</option>

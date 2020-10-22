@@ -1,13 +1,14 @@
 let Variety = require("../models/variety");
 let BottleInstance = require("../models/bottleInstance");
 const { body, validationResult } = require("express-validator");
+const async = require("async");
 
 //Display list of all variety.
 exports.varieties_list = function (req, res, next) {
   Variety.find({})
     .sort([["varietyName", "ascending"]])
     .exec((err, list_varieties) => {
-      console.log(list_varieties);
+      
       if (err) {
         return next(err);
       }
@@ -20,34 +21,43 @@ exports.varieties_list = function (req, res, next) {
 };
 
 // Display detail page for a specific variety.
-exports.variety_detail = function (req, res, next) {
-  let varietyNameParam = req.params.varietyname;
-  console.log(varietyNameParam);
+exports.variety_detail = (req, res, next) => {
+    async.parallel(
+        {
+            variety: (cb) => {
+            Variety.find({varietyName: req.params.varietyname})
+            .exec(cb);
+            },
+            variety_bottleInstances: (cb) => {
+            BottleInstance.find({})
+            .populate("producer")
+            .populate("origin")
+            .populate("variety")
+            .exec(cb);
+            },
+        }, (err, results) => {
+            if (err) {return next(err)}
+            /*
+* account for bottle with multiple grapes?? 
+*
+* */
+            let filteredList = results.variety_bottleInstances.filter( bottle => bottle.variety[0].varietyName == req.params.varietyname)
+      
+    console.log(results.variety)
+          //Successful, so render
+          res.render("variety_details", {
+            title:  req.params.varietyname,
+            variety_details: filteredList,
+            varietyName: req.params.varietyname,
+            variety: results.variety[0]
+            
+          });
+        });
+        }
+      
 
-  BottleInstance.find({})
-    .populate('producer')
-    .populate('origin')
-    .populate({ path: 'variety',
-            populate: 'varietyName'
-        })
-    .exec((err, details_variety) => {
-        console.log(details_variety)
-      if (err) {
-        return next(err);
-      }
+    
 
-      let filteredList = details_variety.filter(
-        (x) => x.variety.varietyName === varietyNameParam
-      );
-
-      //Successful, so render
-      res.render("variety_details", {
-        title:  varietyNameParam,
-        variety_details: filteredList,
-        varietyNameParam
-      });
-    });
-};
 
 // Display variety create form on GET.
 exports.variety_create_get = (req, res, next) => {
@@ -103,14 +113,75 @@ exports.variety_create_post = [
 ];
 
 // Display variety delete form on GET.
-exports.variety_delete_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: variety delete GET");
-};
+exports.variety_delete_get = (req, res, next) => {
+    async.parallel(
+      {
+        variety: (cb) => {
+          Variety.findById(req.params.id).exec(cb);
+        },
+        variety_bottleInstances: (cb) => {
+          BottleInstance.find({ variety: req.params.id })
+          .populate("producer")
+          .populate("origin")
+          .populate("variety")
+          .exec(cb);
+        },
+      },
+      (err, results) => {
+        if (err) {
+          return err;
+        }
+        if (results.variety === null) {
+          res.redirect("/catalog/varieties");
+        }
+        res.render("variety_delete", {
+          title: "Delete Variety",
+          variety: results.variety,
+          variety_bottleInstances: results.variety_bottleInstances,
+        });
+      }
+    );
+  };
 
 // Handle variety delete on POST.
-exports.variety_delete_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: variety delete POST");
-};
+exports.variety_delete_post = (req, res, next) => {
+    async.parallel(
+      {
+        variety: (cb) => {
+          Variety.findById(req.params.id).exec(cb);
+        },
+        variety_bottleInstances: (cb) => {
+          BottleInstance.find({ variety: req.params.id })
+          .populate("producer")
+          .populate("origin")
+          .populate("variety")
+          .exec(cb);
+        },
+      },
+      (err, results) => {
+        if (err) {
+          return err;
+        }
+        if (results.variety_bottleInstances.length > 0) {
+            res.render("variety_delete", {
+                title: "Delete Variety",
+                variety: results.variety,
+                variety_bottleInstances: results.variety_bottleInstances,
+              });
+              return
+        } else {
+            Variety.findByIdAndRemove(req.params.id, function deleteVariety(err){
+                if (err) {return next(err)}
+                res.redirect('/catalog/varieties')
+            })
+        }
+        
+        });
+      }
+  
+
+
+
 
 // Display variety update form on GET.
 exports.variety_update_get = function (req, res) {

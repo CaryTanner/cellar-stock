@@ -14,7 +14,7 @@ const VarietySchema = Schema(
 VarietySchema
     .virtual('url')
     .get( () => {
-        return '/catalog/variety/' + varietyName;
+        return '/catalog/variety/' + this._id;
 })
 
 

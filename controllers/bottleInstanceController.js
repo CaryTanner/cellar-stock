@@ -68,6 +68,7 @@ exports.index = (req, res) => {
 exports.bottleinstance_list = (req, res) => {
     
         BottleInstance.find({} )
+        
         .populate('producer')
         
         .populate('origin')
@@ -77,7 +78,7 @@ exports.bottleinstance_list = (req, res) => {
            
             list_bottleInstance.sort((a, b) => { return a.bin - b.bin})
             if (err) {return next(err)}
-            res.render('bottleInstance_list', {title: 'Bottle Stock', bottleInstance_list: list_bottleInstance})
+            res.render('bottleInstance_list', {title: 'Current Stock', bottleInstance_list: list_bottleInstance})
         })
         
       };
@@ -101,6 +102,7 @@ exports.bottleinstance_detail = (req, res, next) => {
 /*   can't reselect dropdown/select inputs when data needs to be re-entered
 *    recheck varieties from list of varieties??
 *
+        origins are in order by country but not region in drop down selector
 * */
 
 

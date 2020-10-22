@@ -1,7 +1,8 @@
 const Producer = require("../models/producer");
-const BottleInstance = require('../models/bottleInstance');
+const BottleInstance = require("../models/bottleInstance");
 const { body, validationResult } = require("express-validator");
 const async = require("async");
+const { populate } = require("../models/producer");
 
 //display list of producers
 exports.producer_list = (req, res, next) => {
@@ -22,28 +23,35 @@ exports.producer_list = (req, res, next) => {
 
 // Display detail page for a specific producer.
 exports.producer_detail = (req, res, next) => {
-    async.parallel(
-        {
-          producer: (cb) => {
-            Producer.findById(req.params.id)
-            .exec(cb)
-            
-          },
-          producer_bottleInstances: (cb) => {
-            BottleInstance.find({ producer: req.params.id }).exec(cb);
-          },
-        },
-        (err, results) => {
-            console.log(results)
-          if (err) {
-            return err;}
-        if (results.producer==null) { // No results.
-                var err = new Error('Producer not found');
-                err.status = 404;
-                return next(err);
-            } 
-            res.render('producer_detail', {title: 'Producer Detail', data: results})
-        })
+  async.parallel(
+    {
+      producer: (cb) => {
+        Producer.findById(req.params.id).exec(cb);
+      },
+      producer_bottleInstances: (cb) => {
+        BottleInstance.find({ producer: req.params.id })
+          .populate("origin")
+          .populate("variety")
+          .exec(cb);
+      },
+    },
+    (err, results) => {
+      console.log(results);
+      if (err) {
+        return err;
+      }
+      if (results.producer == null) {
+        // No results.
+        var err = new Error("Producer not found");
+        err.status = 404;
+        return next(err);
+      }
+      res.render("producer_detail", {
+        title: "Producer Detail",
+        data: results,
+      });
+    }
+  );
 };
 
 // Display producer create form on GET.
@@ -53,21 +61,20 @@ exports.producer_create_get = (req, res, next) => {
 
 // Handle producer create on POST.
 
-
 exports.producer_create_post = [
   // Validate and sanitise fields.
   body("name")
     .trim()
     .isLength({ min: 1 })
-    
+
     .withMessage("Producer name must be specified"),
-   
+
   body("region")
     .trim()
     .isLength({ min: 4 })
 
     .withMessage("Region must be 4 characters or longer")
-    
+
     .optional({ checkFalsy: true }),
 
   (req, res, next) => {
@@ -95,13 +102,13 @@ exports.producer_create_post = [
         }
         if (found_producer) {
           //producer exists redirect to page
-          res.redirect('/catalog/producer/' + found_producer._id);
+          res.redirect("/catalog/producer/" + found_producer._id);
         } else {
           producer.save((err) => {
             if (err) {
               return next(err);
             }
-            res.redirect('/catalog/producer/' + producer._id );
+            res.redirect("/catalog/producer/" + producer._id);
           });
         }
       });
@@ -117,7 +124,11 @@ exports.producer_delete_get = (req, res, next) => {
         Producer.findById(req.params.id).exec(cb);
       },
       producer_bottleInstances: (cb) => {
-        BottleInstance.find({ producer: req.params.id }).exec(cb);
+        BottleInstance.find({ producer: req.params.id })
+          .populate("producer")
+          .populate("origin")
+          .populate("variety")
+          .exec(cb);
       },
     },
     (err, results) => {
@@ -138,33 +149,42 @@ exports.producer_delete_get = (req, res, next) => {
 
 // Handle producer delete on POST.
 exports.producer_delete_post = (req, res, next) => {
-    async.parallel(
-      {
-        producer: (cb) => {
-          Producer.findById(req.body.producerid).exec(cb);
-        },
-        producer_bottleInstances: (cb) => {
-          BottleInstance.find({ producer: req.body.producerid }).exec(cb);
-        },
+  async.parallel(
+    {
+      producer: (cb) => {
+        Producer.findById(req.body.producerid).exec(cb);
       },
-      (err, results) => {
-        if (err) {
-          return err;
-        } 
-        if(results.producer_bottleInstances.length > 0){
-            res.render("producer_delete", {
-                title: "Delete Producer",
-                producer: results.producer,
-                producer_bottleInstances: results.producer_bottleInstances,
-              });
-              return
-        } else {
-            Producer.findByIdAndRemove(req.body.producerid, function deleteProducer(err){
-                if (err) {return next(err)}
-                res.redirect('/catalog/producers')
-            })
-         }
-    })
+      producer_bottleInstances: (cb) => {
+        BottleInstance.find({ producer: req.body.producerid })
+          .populate("producer")
+          .populate("origin")
+          .populate("variety")
+          .exec(cb);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return err;
+      }
+      if (results.producer_bottleInstances.length > 0) {
+        res.render("producer_delete", {
+          title: "Delete Producer",
+          producer: results.producer,
+          producer_bottleInstances: results.producer_bottleInstances,
+        });
+        return;
+      } else {
+        Producer.findByIdAndRemove(req.body.producerid, function deleteProducer(
+          err
+        ) {
+          if (err) {
+            return next(err);
+          }
+          res.redirect("/catalog/producers");
+        });
+      }
+    }
+  );
 };
 
 // Display producer update form on GET.

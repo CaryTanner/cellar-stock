@@ -1,61 +1,42 @@
-
-
-<div class="container">
-    <h5 class="text-secondary">Wines by Grape Variety</h5>
+<div class="container-fluid col-md-6 justify-content-center">
+    <h5 class="text-secondary mt-3">Wines by Grape Variety</h5>
     <h1 class="mt-2">{{title}}</h1>
 
     <div>{{#each variety_details}}
-        <ul class="list-group mt-2">
-            <li class="list-group-item">
-                <ul class="list-group col-md-6">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <h2>{{this.producer.name}}</h2>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <ul class="list-group list-group-horizontal-md">
-                            <li class="list-group-item flex-fill">{{this.origin.country}}</li>
-                            <li class="list-group-item flex-fill">{{this.origin.region}}</li>
-                            <li class="list-group-item flex-fill">{{this.village}}</li>
-                            <li class="list-group-item flex-fill">{{this.vineyard}}</li>
 
-                        </ul>
-
-
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Classification: <h6 class="align-self-center mt-0 mb-0 ml-1">{{this.classification}}</h6>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Age: <h6 class="align-self-center mt-0 mb-0 ml-1">{{this.age}}</h6>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Category: <h6 class="align-self-center mt-0 mb-0 ml-1">{{this.category}}</h6>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{!-- variety is in an array to provide for wine with multiple grape varieties --}}
-                        Variety: {{#each this.variety}}
-                                        <h6 class="align-self-center mt-0 mb-0 ml-1">{{this.varietyName}}</h6>
-                                        {{/each}}
-                    </li>
-
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Bottle Count
-                        <h5 class="align-self-center mt-0 mb-0 ml-1"><span class="badge badge-secondary badge-pill ml-2">{{this.count}}</span></h5>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Bin No.
-                        <h5 class="align-self-center mt-0 mb-0 ml-1"><span class="badge badge-secondary badge-pill ml-2">{{this.bin }}</span></h5>
-                    </li>
-                    
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="bottleinstance/{{this._id}}"><button class="btn-outline-primary btn-md"></button>Full Info</a>
-                    </li>
+        <ul class="list-group mt-3">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <h2 class="mt-0 mb-0">{{this.producer.name}}</h2>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <ul class="list-group list-group-horizontal-md">
+                    <li class="list-group-item flex-fill">{{this.origin.country}}</li>
+                    <li class="list-group-item flex-fill">{{this.origin.region}}</li>
+                    <li class="list-group-item flex-fill">{{this.village}}</li>
+                    <li class="list-group-item flex-fill">{{this.vineyard}}</li>
 
                 </ul>
 
 
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Age: <h6 class="align-self-center mt-0 mb-0 ml-1">{{this.age}}</h6>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Bin No.
+                <h5 class="align-self-center mt-0 mb-0 ml-1"><span
+                        class="badge badge-secondary badge-pill ml-2">{{this.bin }}</span></h5>
+            </li>
+    <li class="list-group-item d-flex justify-content-start align-items-center">
+                <a href="bottleinstance/{{this._id}}"><button class="btn btn-outline-primary btn-sm ">Full Info</button></a>
+    </li>
 
         </ul>
+
+
+
+
 
 
         {{/each}}
@@ -65,6 +46,8 @@
 
     {{else}}
     <h4 class="mt-4">Time to go shopping!</h4>
-    <h6>There aren't any {{varietyNameParam}} wines in your cellar yet.</h6>
+    <h6>There aren't any {{title}} wines in your cellar yet.</h6>
     {{/if}}
+    <a href="/catalog/variety/{{variety._id}}/delete"><button
+                        class="btn btn-outline-danger btn-sm mt-1">Delete Variety</button></a>
 </div>

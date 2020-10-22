@@ -1,36 +1,36 @@
-<div class="container">
+<div class="container-fluid col-md-6 justify-content-center">
     <h1 class="mt-4">{{title}}</h1>
     
     <h4 class="mt-4">Cellar Overview</h4>
 
-    <ul class="list-group col-md-6">
+    <ul class="list-group ">
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            Total number of bottles
-            <h6><span class="badge badge-primary ml-2">{{bottlesTotal}}</span></h6>
+            Total Number of Bottles
+            <h6><span class="badge  badge-pill badge-primary ml-2">{{bottlesTotal}}</span></h6>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            Different Bottles Registered
-            <h6><span class="badge badge-primary ml-2">{{data.bottle_instance_count}}</span></h6>
+            Bottles Registered
+            <h6><span class="badge  badge-pill badge-primary ml-2">{{data.bottle_instance_count}}</span></h6>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
             Bottles Ready to Drink
-            <h6><span class="badge badge-primary ml-2">{{data.bottle_instance_drink_count}}</span></h6>
+            <h6><span class="badge  badge-pill badge-primary ml-2">{{data.bottle_instance_drink_count}}</span></h6>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            Bottles Ready to Drink or Hold
-            <h6><span class="badge badge-primary ml-2">{{data.bottle_instance_drinkorhold_count }}</span></h6>
+            Bottles to Drink or Hold
+            <h6><span class="badge  badge-pill badge-primary ml-2">{{data.bottle_instance_drinkorhold_count }}</span></h6>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            Different Prodcuers Registered
-            <h6><span class="badge badge-primary ml-2">{{data.producer_count }}</span></h6>
+            Producers Registered
+            <h6><span class="badge badge-pill  badge-primary ml-2">{{data.producer_count }}</span></h6>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
             Grape Varieties
-            <h6><span class="badge badge-primary ml-2">{{data.varieties_count }}</span></h6>
+            <h6><span class="badge  badge-pill badge-primary ml-2">{{data.varieties_count }}</span></h6>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            Countries/Regions/Village/Vineyard
-            <h6><span class="badge badge-primary ml-2">{{data.origins_count }}</h6>
+            Countries/Regions
+            <h6><span class="badge  badge-pill badge-primary ml-2">{{data.origins_count }}</h6>
         </li>
 
     </ul>
