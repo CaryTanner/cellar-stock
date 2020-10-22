@@ -1,39 +1,36 @@
 <div class="container">
     <h1 class="mt-4">{{title}}</h1>
-    <h4 class="mt-2">{{subtitle}}</h4>
-
-
-
+    
     <h4 class="mt-4">Cellar Overview</h4>
 
     <ul class="list-group col-md-6">
         <li class="list-group-item d-flex justify-content-between align-items-center">
             Total number of bottles
-            <span class="badge badge-info badge-pill ml-2">{{bottlesTotal}}</span>
+            <h6><span class="badge badge-primary ml-2">{{bottlesTotal}}</span></h6>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
             Different Bottles Registered
-            <span class="badge badge-info badge-pill ml-2">{{data.bottle_instance_count}}</span>
+            <h6><span class="badge badge-primary ml-2">{{data.bottle_instance_count}}</span></h6>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
             Bottles Ready to Drink
-            <span class="badge badge-info badge-pill ml-2">{{data.bottle_instance_drink_count}}</span>
+            <h6><span class="badge badge-primary ml-2">{{data.bottle_instance_drink_count}}</span></h6>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
             Bottles Ready to Drink or Hold
-            <span class="badge badge-info badge-pill ml-2">{{data.bottle_instance_drinkorhold_count }}</span>
+            <h6><span class="badge badge-primary ml-2">{{data.bottle_instance_drinkorhold_count }}</span></h6>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
             Different Prodcuers Registered
-            <span class="badge badge-info badge-pill ml-2">{{data.producer_count }}</span>
+            <h6><span class="badge badge-primary ml-2">{{data.producer_count }}</span></h6>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
             Grape Varieties
-            <span class="badge badge-info badge-pill ml-2">{{data.varieties_count }}</span>
+            <h6><span class="badge badge-primary ml-2">{{data.varieties_count }}</span></h6>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
             Countries/Regions/Village/Vineyard
-            <span class="badge badge-info badge-pill ml-2">{{data.origins_count }}</span>
+            <h6><span class="badge badge-primary ml-2">{{data.origins_count }}</h6>
         </li>
 
     </ul>

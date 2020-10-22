@@ -1,13 +1,16 @@
 <div class="container">
     <h1 class="mt-2">{{title}}</h1>
     <div>{{#each producer_list}}
-        <ul class="list-group">
+        <ul class="list-group mt-3 col-md-6">
             <li class="list-group-item">
-                <h5>{{this.name}}</h5>
+                <h3>{{this.name}}</h3>
                 
                 <p>{{this.region}}</p>
-                <br>
-                <a href="producer/{{this._id}}">Full Details</a>
+               
+                </li>
+                <li class="list-group-item">
+                <a href="producer/{{this._id}}"><button class="btn btn-outline-primary btn-sm">Wines</button></a>
+                <a href="/catalog/producer/{{this._id}}/delete"><button class="btn btn-outline-danger btn-sm ">Delete</button></a>
                 </li>
         </ul>
 

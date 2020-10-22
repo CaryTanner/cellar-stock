@@ -1,5 +1,5 @@
 const BottleInstance = require('../models/bottleInstance');
-const Bottle = require("../models/bottle");
+
 
 const Producer = require("../models/producer");
 const Origin = require("../models/origin");
@@ -15,9 +15,7 @@ const { body, validationResult } = require("express-validator");
 exports.index = (req, res) => {
   async.parallel(
     {
-      bottle_count: (cb) => {
-        Bottle.countDocuments({}, cb);
-      },
+      
       bottle_instance_count: (cb) => {
         BottleInstance.countDocuments({}, cb);
       },
@@ -25,7 +23,7 @@ exports.index = (req, res) => {
         BottleInstance.find({}, cb).exec();
       },
       bottle_instance_drink_count: (cb) => {
-        let drinkers = BottleInstance.countDocuments({ status: "Drink" }, cb);
+       BottleInstance.countDocuments({ status: "Drink" }, cb);
       },
       bottle_instance_drinkorhold_count: (cb) => {
         BottleInstance.countDocuments({ status: "Drink or Hold" }, cb);
@@ -42,14 +40,21 @@ exports.index = (req, res) => {
     },
     (err, results) => {
       //get total number of bottles in cellar adding counts from every instance
+      
+/*
+* total number of bottle returns as NaN?
+*
+* */
+
       let totalBottles = results.bottle_instance_count_total
         .map((res) => res.count)
         .reduce((acc, current) => {
           return acc + current;
         }, 0);
+       
       res.render("index", {
-        title: "Cellar Stock ",
-        subtitle: "Wine Cellar Tracker",
+        title: "Welcome to Cellar Stock!",
+        
         bottlesTotal: totalBottles,
         error: err,
         data: results,
@@ -64,10 +69,12 @@ exports.bottleinstance_list = (req, res) => {
     
         BottleInstance.find({} )
         .populate('producer')
+        
         .populate('origin')
         .populate('variety')
+        
         .exec( (err, list_bottleInstance) => {
-            // console.log(list_bottleInstance.map( x => x.bottle.variety[0]['varietyName'] ))
+           
             list_bottleInstance.sort((a, b) => { return a.bin - b.bin})
             if (err) {return next(err)}
             res.render('bottleInstance_list', {title: 'Bottle Stock', bottleInstance_list: list_bottleInstance})
@@ -77,8 +84,16 @@ exports.bottleinstance_list = (req, res) => {
 
 
 // Display detail page for a specific bottleInstance.
-exports.bottleinstance_detail = (req, res) => {
-    res.send('NOT IMPLEMENTED: bottleInstance detail: ' + req.params.id);
+exports.bottleinstance_detail = (req, res, next) => {
+    BottleInstance.findById(req.params.id)
+    .populate('producer')
+        .populate('origin')
+        .populate('variety')
+        .exec( (err, results) => {
+            
+            if (err) {return next(err)}
+            res.render('bottleInstance_detail', {title: 'Full Bottle Info', data: results})
+        })
 };
 
 // Display bottleInstance create form on GET.
@@ -113,18 +128,7 @@ exports.bottleinstance_create_get = (req, res) => {
 // Handle bottleInstance create on POST.
 exports.bottleinstance_create_post = [
    
-    // (req, res, next) => {
-    //     if(!(req.body.varieties instanceof Array)){
-    //         if(typeof req.body.varieties ==='undefined')
-    //         req.body.varieties = [];
-    //         else
-    //         req.body.varieties = new Array(req.body.varieties);
-    //     }
-    //     console.log('log of variety ids' + req.body.varieties)
-    //     next();
-    // },
-    
-     // Validate and sanitise fields.
+   
      
 body('age', 'Age is required')
     .trim()
@@ -136,25 +140,15 @@ body('age', 'Age is required')
 
 body("village")
     .trim()
-    .escape()
-    .matches(/^[a-z0-9 ]+$/i)
-    .withMessage("Village name has non-alphanumeric characters")
     .optional({ checkFalsy: true }),
   body("vineyard")
     .trim()
-    .escape()
-    .matches(/^[a-z0-9 ]+$/i)
-    .withMessage("Vineyard name has non-alphanumeric characters")
     .optional({ checkFalsy: true }),
 body("classification")
     .trim()
-    .escape()
-    .matches(/^[a-z0-9 ]+$/i)
-    .withMessage("Classification has non-alphanumeric characters")
     .optional({ checkFalsy: true }),
 body('notes')
-    .trim()
-    .escape(),
+    .trim(),
 
     (req, res, next) => {
         
@@ -195,16 +189,14 @@ body('notes')
             }, (err, results) => {
                 
                 if(err){return next(err)}
-
-                // // Mark our selected varieties as checked.
-                // for (let i = 0; i < results.varieties.length; i++) {
-                //     if (bottleInstance.variety.indexOf(results.varieties[i]._id) > -1) {
-                //         return results.varieties[i].checked='true';
-                //     }
-                // }
-                //     (console.log('results log' + results))
                 
-                res.render('bottle_instance_form', {title: "Add a New Bottle", producers: results.producers, origins: results.origins, varieties: results.varieties, data: req.body, errors: errors.array()})
+                res.render('bottle_instance_form', 
+                    {title: "Add a New Bottle", 
+                    producers: results.producers, 
+                    origins: results.origins, 
+                    varieties: results.varieties, 
+                    data: req.body, 
+                    errors: errors.array()})
         
             })
             return
@@ -221,21 +213,146 @@ body('notes')
 ];
 
 // Display bottleInstance delete form on GET.
-exports.bottleinstance_delete_get = (req, res) => {
-    res.send('NOT IMPLEMENTED: bottleInstance delete GET');
+exports.bottleinstance_delete_get = (req, res, next) => {
+    BottleInstance.findById(req.params.id)
+    .populate('producer')
+        .populate('origin')
+        .populate('variety')
+        .exec( (err, results) => {
+            
+            if (err) {return next(err)}
+            res.render('bottle_instance_delete', {title: 'Delete Bottle', data: results})
+        })
 };
 
 // Handle bottleInstance delete on POST.
-exports.bottleinstance_delete_post = (req, res) => {
-    res.send('NOT IMPLEMENTED: bottleInstance delete POST');
+exports.bottleinstance_delete_post = (req, res, next) => {
+    BottleInstance.findByIdAndRemove(req.params.id)
+        .exec( (err, results) => {
+            
+            if (err) {return next(err)}
+            res.redirect('/catalog/bottleinstances')
+        })
 };
 
 // Display bottleInstance update form on GET.
-exports.bottleinstance_update_get = (req, res) => {
-    res.send('NOT IMPLEMENTED: bottleInstance update GET');
+exports.bottleinstance_update_get = (req, res, next) => {
+    async.parallel({
+        bottleInstance: (cb) => {
+            BottleInstance.findById(req.params.id)
+            .populate('producer')
+            .populate('origin')
+            .exec(cb)   
+        },
+        
+        varieties: (cb) => {
+            Variety.find(cb)
+            .sort([["varietyName", "ascending"]])
+        },
+    }, (err, results) => {
+        if(err) {return next(err)}
+        res.render('bottle_instance_update', 
+            {title: "Update this Bottle", 
+            varieties: results.varieties, 
+            producer: results.bottleInstance.producer,
+            origin: results.bottleInstance.origin,
+            data: results.bottleInstance
+            })
+
+    })
 };
 
 // Handle bottleinstance update on POST.
-exports.bottleinstance_update_post = (req, res) => {
-    res.send('NOT IMPLEMENTED: bottleInstance update POST')
-};
+exports.bottleinstance_update_post = [
+   
+body('varieties', 'Variety is required')
+    
+    .isLength({min:'1'}),
+       
+body('age', 'Age is required')
+    .trim()
+    .isLength({min:'4', max:'4'})
+    .withMessage('Year must be 4 numbers - YYYY')
+    .isNumeric()
+    .withMessage('May only contain numbers')
+    .escape(),
+
+body("village")
+    .trim()
+    .escape()
+    .matches(/^[a-z0-9 ]+$/i)
+    .withMessage("Village name has non-alphanumeric characters")
+    .optional({ checkFalsy: true }),
+  body("vineyard")
+    .trim()
+    .escape()
+    .matches(/^[a-z0-9 ]+$/i)
+    .withMessage("Vineyard name has non-alphanumeric characters")
+    .optional({ checkFalsy: true }),
+body("classification")
+    .trim()
+    .escape()
+    .matches(/^[a-z0-9 ]+$/i)
+    .withMessage("Classification has non-alphanumeric characters")
+    .optional({ checkFalsy: true }),
+body('notes')
+    .trim()
+    .escape(),
+
+    (req, res, next) => {
+        console.log(req.body)
+        //collect errors
+        const errors = validationResult(req)
+        
+        //create new bottleInstance with proper data
+        let bottleInstanceUpdated = {
+            village: req.body.village,
+            vineyard: req.body.vineyard,
+            classification: req.body.classification,
+            category: req.body.category,
+            variety: req.body.varieties,
+            notes: req.body.notes,
+            age: req.body.age,
+            count: req.body.count,
+            bin: req.body.bin,
+            status: req.body.status ,
+            notes: req.body.notes
+        }
+        console.log( 'this is the bottle instance' + bottleInstanceUpdated)
+        if(!errors.isEmpty()){
+            async.parallel({
+                bottleInstance: (cb) => {
+                    BottleInstance.findById(req.params.id)
+                    .populate('producer')
+                    .populate('origin')
+                    .exec(cb)   
+                },
+                
+                varieties: (cb) => {
+                    Variety.find(cb)
+                    .sort([["varietyName", "ascending"]])
+                },
+            }, (err, results) => {
+                if(err) {return next(err)}
+                res.render('bottle_instance_update', 
+                    {title: "Update this Bottle", 
+                    varieties: results.varieties,
+                    producer: results.bottleInstance.producer,
+                    origin: results.bottleInstance.origin, 
+                    data: req.body,
+                    errors: errors.array()
+                    })
+        
+            })
+            return
+        } else {
+            BottleInstance.findByIdAndUpdate(req.params.id, bottleInstanceUpdated, {}, (err, results) => {
+                if (err){return next(err)}
+                res.redirect('/catalog/bottleInstance/' + req.params.id)
+            })
+        }
+
+
+    }
+    
+];

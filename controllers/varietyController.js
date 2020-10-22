@@ -23,7 +23,7 @@ exports.varieties_list = function (req, res, next) {
 exports.variety_detail = function (req, res, next) {
   let varietyNameParam = req.params.varietyname;
   console.log(varietyNameParam);
-e
+
   BottleInstance.find({})
     .populate('producer')
     .populate('origin')
@@ -42,7 +42,7 @@ e
 
       //Successful, so render
       res.render("variety_details", {
-        title: `  ${varietyNameParam} Wines in Stock`,
+        title:  varietyNameParam,
         variety_details: filteredList,
         varietyNameParam
       });
@@ -60,15 +60,12 @@ exports.variety_create_post = [
   //check name and 'sanitise'
   body("varietyName", "Variety Name Required")
     .trim()
-    .isLength({ min: 3 })
-    .escape()
-    .matches(/^[a-z0-9 ]+$/i)
-    .withMessage('May not contain non-alphanumeric characters'),
+    .isLength({ min: 3 }),
 
   //continue request cycle
   (req, res, next) => {
     const errors = validationResult(req);
-    
+    console.log(req.body.varietyName)
     let variety = new Variety({
       varietyName: req.body.varietyName,
     });

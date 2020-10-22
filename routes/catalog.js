@@ -2,7 +2,7 @@ let express = require('express');
 let router = express.Router();
 
 // Require controller modules.
-let bottle_controller = require('../controllers/bottleController');
+
 let producer_controller = require('../controllers/producerController');
 let origin_controller = require('../controllers/originController');
 let bottle_instance_controller = require('../controllers/bottleInstanceController');
@@ -14,29 +14,7 @@ let category_controller = require('../controllers/categoryController');
 // GET catalog home page.
 router.get('/', bottle_instance_controller.index);
 
-// GET request for creating a bottle. NOTE This must come before routes that display bottle (uses id).
-router.get('/bottle/create', bottle_controller.bottle_create_get);
 
-// POST request for creating bottle.
-router.post('/bottle/create', bottle_controller.bottle_create_post);
-
-// GET request to delete bottle.
-router.get('/bottle/:id/delete', bottle_controller.bottle_delete_get);
-
-// POST request to delete bottle.
-router.post('/bottle/:id/delete', bottle_controller.bottle_delete_post);
-
-// GET request to update bottle.
-router.get('/bottle/:id/update', bottle_controller.bottle_update_get);
-
-// POST request to update bottle.
-router.post('/bottle/:id/update', bottle_controller.bottle_update_post);
-
-// GET request for one bottle.
-router.get('/bottle/:id', bottle_controller.bottle_detail);
-
-// GET request for list of all bottle items.
-router.get('/bottles', bottle_controller.bottle_list);
 
 /// Producer ROUTES ///
 
@@ -146,26 +124,7 @@ router.get('/varieties/', variety_controller.varieties_list);
 
 /// CATEGORY ROUTES ///
 
-// GET request for creating a category. NOTE This must come before route that displays category (uses id).
-router.get('/category/create', category_controller.category_create_get);
-
-//POST request for creating category.
-router.post('/category/create', category_controller.category_create_post);
-
-// GET request to delete category.
-router.get('/category/:id/delete', category_controller.category_delete_get);
-
-// POST request to delete category.
-router.post('/category/:id/delete', category_controller.category_delete_post);
-
-// GET request to update category.
-router.get('/category/:id/update', category_controller.category_update_get);
-
-// POST request to update category.
-router.post('/category/:id/update', category_controller.category_update_post);
 
 // GET request for one category.
 router.get('/category/:name', category_controller.category_details);
 
-// GET request for list of all category.
-router.get('/categories', category_controller.category_list);

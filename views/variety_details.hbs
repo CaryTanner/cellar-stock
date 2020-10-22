@@ -1,12 +1,13 @@
 
 
 <div class="container">
+    <h5 class="text-secondary">Wines by Grape Variety</h5>
     <h1 class="mt-2">{{title}}</h1>
 
     <div>{{#each variety_details}}
         <ul class="list-group mt-2">
             <li class="list-group-item">
-                <ul class="list-group col-md-8">
+                <ul class="list-group col-md-6">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <h2>{{this.producer.name}}</h2>
                     </li>
@@ -21,33 +22,33 @@
 
 
                     </li>
-                    <li class="list-group-item d-flex align-items-center">
-                        <span class="text-secondary">Classification: &nbsp;</span>  {{this.classification}}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Classification: <h6 class="align-self-center mt-0 mb-0 ml-1">{{this.classification}}</h6>
                     </li>
-                    <li class="list-group-item d-flex  align-items-center">
-                        <span class="text-secondary">Age: &nbsp;</span> {{this.age}}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Age: <h6 class="align-self-center mt-0 mb-0 ml-1">{{this.age}}</h6>
                     </li>
-                    <li class="list-group-item d-flex  align-items-center">
-                        <span class="text-secondary">Category: &nbsp;</span> {{this.category}}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Category: <h6 class="align-self-center mt-0 mb-0 ml-1">{{this.category}}</h6>
                     </li>
-                    <li class="list-group-item d-flex align-items-center">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
                         {{!-- variety is in an array to provide for wine with multiple grape varieties --}}
-                        <span class="text-secondary">Variety: &nbsp;</span> {{#each this.variety}}
-                        {{this.varietyName}}
-                        {{/each}}
+                        Variety: {{#each this.variety}}
+                                        <h6 class="align-self-center mt-0 mb-0 ml-1">{{this.varietyName}}</h6>
+                                        {{/each}}
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Bottle Count
-                        <span class="badge badge-info badge-pill ml-2">{{this.count}}</span>
+                        <h5 class="align-self-center mt-0 mb-0 ml-1"><span class="badge badge-secondary badge-pill ml-2">{{this.count}}</span></h5>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Bin No.
-                        <span class="badge badge-info badge-pill ml-2">{{this.bin }}</span>
+                        <h5 class="align-self-center mt-0 mb-0 ml-1"><span class="badge badge-secondary badge-pill ml-2">{{this.bin }}</span></h5>
                     </li>
                     
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="bottleinstance/{{this._id}}">Full Details</a>
+                        <a href="bottleinstance/{{this._id}}"><button class="btn-outline-primary btn-md"></button>Full Info</a>
                     </li>
 
                 </ul>

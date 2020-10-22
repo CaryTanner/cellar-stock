@@ -3,15 +3,17 @@
     <div>
         {{#each origin_list}}
 
-        <ul class="list-group mt-2 col-md-8">
+        <ul class="list-group mt-2 col-md-6">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <h4>{{this.country}}</h4>
+                <h3>{{this.country}}</h3>
             </li>
 
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                Region: {{this.region}}
+                <h6>Region: {{this.region}}</h6>
             </li>
-           
+           <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="/catalog/origin/{{this._id}}"><button class="btn btn-outline-primary btn-sm">Wines</button></a>
+                    </li>
 
         </ul>
         {{/each}}

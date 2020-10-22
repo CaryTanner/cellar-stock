@@ -52,22 +52,22 @@ exports.producer_create_get = (req, res, next) => {
 };
 
 // Handle producer create on POST.
+
+
 exports.producer_create_post = [
   // Validate and sanitise fields.
   body("name")
     .trim()
     .isLength({ min: 1 })
-    .escape()
-    .withMessage("Producer name must be specified")
-    .matches(/^[a-z0-9 ]+$/i)
-    .withMessage("Producer name has non-alphanumeric characters."),
+    
+    .withMessage("Producer name must be specified"),
+   
   body("region")
     .trim()
     .isLength({ min: 4 })
-    .escape()
+
     .withMessage("Region must be 4 characters or longer")
-    .matches(/^[a-z0-9 ]+$/i)
-    .withMessage("Region name has non-alphanumeric characters")
+    
     .optional({ checkFalsy: true }),
 
   (req, res, next) => {
@@ -95,7 +95,7 @@ exports.producer_create_post = [
         }
         if (found_producer) {
           //producer exists redirect to page
-          res.redirect(found_producer.url);
+          res.redirect('/catalog/producer/' + found_producer._id);
         } else {
           producer.save((err) => {
             if (err) {
