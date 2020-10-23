@@ -43,7 +43,7 @@ exports.variety_detail = (req, res, next) => {
 * */
             let filteredList = results.variety_bottleInstances.filter( bottle => bottle.variety[0].varietyName == req.params.varietyname)
       
-    console.log(results.variety)
+    
           //Successful, so render
           res.render("variety_details", {
             title:  req.params.varietyname,

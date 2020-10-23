@@ -39,6 +39,7 @@ exports.index = (req, res) => {
       },
     },
     (err, results) => {
+        if (err) {return next(err)}
       //get total number of bottles in cellar adding counts from every instance
       
 /*
@@ -173,7 +174,7 @@ body('notes')
             status: req.body.status ,
             notes: req.body.notes
         })
-        console.log( 'this is the bottle instance' + bottleInstance)
+        
         if(!errors.isEmpty()){
             async.parallel({
                 producers: (cb) => {
@@ -304,7 +305,7 @@ body('notes')
     .escape(),
 
     (req, res, next) => {
-        console.log(req.body)
+        
         //collect errors
         const errors = validationResult(req)
         
@@ -322,7 +323,7 @@ body('notes')
             status: req.body.status ,
             notes: req.body.notes
         }
-        console.log( 'this is the bottle instance' + bottleInstanceUpdated)
+        
         if(!errors.isEmpty()){
             async.parallel({
                 bottleInstance: (cb) => {

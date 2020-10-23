@@ -35,7 +35,7 @@ exports.origin_detail = (req, res, next) => {
       },
     },
     (err, results) => {
-      console.log(results);
+      
       if (err) {
         return err;
       }
