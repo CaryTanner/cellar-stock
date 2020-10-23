@@ -4,6 +4,11 @@
 
 Created with Express-Generator. Also uses MongoDB, Mongoose, Express-Validator, Bootstrap for styling & Handlebars for Template Generation.
 
+.env
+========
+
+MongoDB connection string is saved as a environment variable  is MONGODB_URI
+
 
 Project
 ========
