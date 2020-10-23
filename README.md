@@ -14,7 +14,7 @@ Features
 --------
 
 - Add, update & delete bottles from the cellar/database.
-- Sort bottle by origin, producer, grape variety or category- red, white, bubbles and more!
+- Sort bottles by origin, producer, grape variety or category- red, white, bubbles and more!
 - Choose from lists of world's major wine regions, popular grape varieties and famous producers or create your own custom entries for all three. 
 
 Contribute
