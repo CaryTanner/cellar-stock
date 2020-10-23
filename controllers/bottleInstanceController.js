@@ -270,7 +270,9 @@ exports.bottleinstance_update_post = [
 body('varieties', 'Variety is required')
     
     .isLength({min:'1'}),
-       
+body('category', 'Category is required')
+    .trim()
+    .isLength({min:'1'}),
 body('age', 'Age is required')
     .trim()
     .isLength({min:'4', max:'4'})

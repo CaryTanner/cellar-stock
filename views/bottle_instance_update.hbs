@@ -1,4 +1,4 @@
-<div class="container-fluid col-md-6 justify-content-center">
+<div class="container-fluid col-md-5 justify-content-center">
 
     <form action='' method='POST' class="mt-3 ">
         <h1 class="mt-3">{{title}}</h1>
@@ -48,6 +48,7 @@
                 <span class="text-secondary">(required)</span>
             </label>
             <select class="form-control" name="category" id="categoryName" value={{data.category}} required>
+                <option class="" value=""></option>
                 <option class="" value="Red">Red</option>
                 <option class="" value="White">White</option>
                 <option class="" value="Rose">Rose</option>
@@ -96,6 +97,7 @@
                 <span class="text-secondary">(required)</span>
             </label>
             <select class="form-control" name="status" id="status" value={{data.status}} required>
+                <option class="" value=""></option>
                 <option class="" value="Drink">Drink</option>
                 <option class="" value="Hold">Hold</option>
                 <option class="" value="Drink or Hold">Drink or Hold</option>
