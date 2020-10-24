@@ -116,6 +116,7 @@ exports.bottleinstance_create_get = (req, res) => {
         origins: (cb)=> {
             Origin.find(cb)
             .sort([["country", "ascending"]])
+            .sort([["region", "ascending"]])
         },
         varieties: (cb) => {
             Variety.find(cb)
@@ -184,6 +185,7 @@ body('notes')
                 origins: (cb)=> {
                     Origin.find(cb)
                     .sort([["country", "ascending"]])
+                    .sort([["region", "ascending"]])
                 },
                 varieties: (cb) => {
                     Variety.find(cb)

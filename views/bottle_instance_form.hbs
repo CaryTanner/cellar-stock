@@ -41,8 +41,8 @@
                 value="{{data.vineyard}}">
         </div>
         <div class="form-group">
-            <h5><label for="classification" class="">Classification</label></h5>
-            <input type="text" name="classification" class="form-control mb-0" placeholder="ex. Smaragd or Gran Reserva"
+            <h5><label for="classification" class="">Classification/Name</label></h5>
+            <input type="text" name="classification" class="form-control mb-0" placeholder='ex. Smaragd or "Pavillon Rouge"'
                 value="{{data.classification}}">
         </div>
         <div class="form-group">
@@ -54,8 +54,12 @@
                 value="{{data.age}}" min="1600" max="2100" required/>
         </div>
         <div class="form-group">
-            <label for="categoryName" class=""><h5>Category</h5><span>(required)</span></label>
-            <select class="form-control" name="category" id="categoryName" value={{data.category}} required>
+            <label for="categoryName" class="">
+                <h5>Category</h5>
+                <span class="text-secondary">(required)</span>
+            </label>
+            <select class="form-control" name="category" id="categoryName" value={{data.category}} placeholder="Red, White, Sparkling or more?" required>
+                <option class="" value=""></option>
                 <option class="" value="Red">Red</option>
                 <option class="" value="White">White</option>
                 <option class="" value="Rose">Rose</option>

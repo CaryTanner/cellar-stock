@@ -8,6 +8,7 @@ exports.origin_list = (req, res) => {
   Origin.find({}, " country region village vineyard")
 
     .sort([["country", "ascending"]])
+    .sort([["region", "ascending"]])
     .exec((err, list_origins) => {
       if (err) {
         return next(err);
@@ -35,7 +36,6 @@ exports.origin_detail = (req, res, next) => {
       },
     },
     (err, results) => {
-      
       if (err) {
         return err;
       }
@@ -85,11 +85,26 @@ exports.origin_create_post = [
       });
       return;
     } else {
-      origin.save((err) => {
+      //form values valid
+      // check DB for repeats
+      Origin.findOne({
+        region: new RegExp("^" + req.body.region + "$", "i"),
+      }).exec((err, found_region) => {
+        console.log(found_region)
         if (err) {
           return next(err);
         }
-        res.redirect("/catalog/origin/" + origin._id);
+        if (found_region) {
+          //region exists redirect to page
+          res.redirect("/catalog/origin/" + found_region._id);
+        } else {
+          origin.save((err) => {
+            if (err) {
+              return next(err);
+            }
+            res.redirect("/catalog/origin/" + origin._id);
+          });
+        }
       });
     }
   },
