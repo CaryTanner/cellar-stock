@@ -15,21 +15,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-// helpers to reselect options from select menus in handlebars forms 
-let hbs = exphbs.create({
-  
-  helpers: {
-    selectorHelp: (value, options) => {
-      return options.fn(this)
-        .split('\n')
-        .map(function(v) {
-          var t = 'value="' + value + '"'
-          return ! RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"')
-        })
-        .join('\n')
-    }
-  }
-});
+
 
 
 
